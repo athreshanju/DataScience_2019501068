@@ -18,6 +18,10 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.feature_selection import RFECV
 from sklearn.preprocessing import RobustScaler
 from sklearn.metrics import make_scorer
+from sklearn.model_selection import KFold, cross_val_score, train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_squared_error as mserr
 
 path = "C:\\Users\\Chowdary\\Desktop\\datasets\\"
 train = path+"train.csv"
@@ -72,6 +76,43 @@ testx_df_filled=imputer.transform(testx_df)
 testx_df_filled = pd.DataFrame(testx_df_filled,columns=testx_df.columns)
 testx_df_filled.reset_index(drop=True,inplace=True)
 print(trainx_df_filled.isnull().sum())
+scaler = preprocessing.StandardScaler().fit(trainx_df)
+trainx_df=scaler.transform(trainx_df)
+testx_df=scaler.transform(testx_df)
+print(trainx_df,testx_df)
+X_train, X_test, y_train, y_test = train_test_split(trainx_df_filled, trainy_df.values.ravel(), test_size = 0.3, random_state = 42)
+print(X_train,X_test,y_train,y_test)
+reg = LinearRegression().fit(X_train, y_train)
+print(reg.score(X_train, y_train))
+print(reg.score(X_test, y_test))
+score_train=[]
+score_test=[]
+mse_train=[]
+mse_test=[]
+alpha=[]
+for sigma in np.linspace(10.05, 71.05, 10):
+    alpha.append(sigma)
+    reg = Ridge(alpha = sigma, tol = 0.0001)
+    reg = reg.fit(X_train, y_train)
+    pred = pd.DataFrame(reg.predict(testx_df_filled))
+    score_train.append(round(reg.score(X_train, y_train),10))
+    score_test.append(round(reg.score(X_test, y_test),10))
+    mse_train.append(round(mserr(y_train,reg.predict(X_train)),4))
+    mse_test.append(round(mserr(y_test,reg.predict(X_test)),4))
+    testpred = pd.DataFrame(reg.predict(testx_df_filled))
+    testpred.to_csv("test_pred.csv")
+print(alpha, '\n', score_train, '\n', score_test)
+plt.figure(1)
+plt.plot(alpha, score_train, 'g--', label = "train_score")
+plt.plot(alpha, score_test, 'r-o', label = "test_score")
+plt.xlabel = 'Alpha'
+plt.legend()
+plt.figure(2)
+plt.plot(alpha, mse_train, 'y--',label = "train_mse")
+plt.plot(alpha, mse_test, 'c-o',label = "test_mse")
+plt.xlabel = 'Alpha'
+plt.legend()
+plt.show()
 
 
 
