@@ -1,0 +1,17 @@
+setwd("C:\\Users\\Chowdary\\Desktop\\Final exam\\Final exam")
+data = read.csv("Liver_data.csv", header = FALSE, col.names = c("mcv", "alkphos", "sgpt", "sgot", "gammagt", "drinks", "selector"))
+data$drinks = cut(data$drinks, breaks = c(0,5,10,15,20,25), labels = c('C1', 'C2', 'C3', 'C4', 'C4'), right = FALSE)
+data = na.omit(data)
+traindata = subset(data, data$selector == 1)
+testdata = subset(data, data$selector == 2)
+x_train <- subset(traindata, select = -c(selector, drinks))
+x_test <- subset(testdata, select = -c(selector, drinks))
+y_train = traindata[,6, drop = TRUE]
+y_test = testdata[,6, drop = TRUE]
+library(class)
+model1 = knn(x_train, x_test, y_train, k = 1)
+1-sum(y_train==model1)/length(y_train) 
+model2 = knn(x_train, x_train, y_train, k = 2)
+1-sum(y_train==model2)/length(y_train)
+model3 = knn(x_train, x_train, y_train, k = 3)
+1-sum(y_train==model3)/length(y_train)
