@@ -1,4 +1,4 @@
-setwd("C:\\Users\\Chowdary\\Desktop\\Final exam\\Final exam")
+setwd("G:\\DataScience_2019501068\\Data-Mining\\Exam-Solutions\\Final exam\\Final exam\\question-3")
 lensdata = read.csv("lenses.data.csv", header = FALSE, col.names = c("index", "age", "spectacle_prescription", "astigmatic", "tear_production_rate", "Class"))
 
 lensdata$index <- NULL

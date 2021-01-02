@@ -1,4 +1,4 @@
-setwd("C:\\Users\\Chowdary\\Desktop\\Final exam\\Final exam")
+setwd("G:\\DataScience_2019501068\\Data-Mining\\Exam-Solutions\\Final exam\\Final exam")
 data = read.csv("Liver_data.csv", header = FALSE, col.names = c("mcv", "alkphos", "sgpt", "sgot", "gammagt", "drinks", "selector"))
 data$drinks = cut(data$drinks, breaks = c(0,5,10,15,20,25), labels = c('C1', 'C2', 'C3', 'C4', 'C4'), right = FALSE)
 data = na.omit(data)

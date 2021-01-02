@@ -1,4 +1,4 @@
-setwd("C:\\Users\\Chowdary\\Desktop\\Final exam\\Final exam")
+setwd("G:\\DataScience_2019501068\\Data-Mining\\Exam-Solutions\\Final exam\\Final exam\\question-2")
 data = read.csv("apriori_data.csv", header = TRUE);
 View(data)
 data$TID <- NULL
