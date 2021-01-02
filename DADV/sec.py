@@ -2,7 +2,7 @@ import glob
 import csv
 import os
 import pandas as pd
-for files in glob.glob('C:\\Users\\Chowdary\\Desktop\\Dadv\\*.csv'):
+for files in glob.glob('G:\\DataScience_2019501068\\DADV\\*.csv'):
     f = open(files, 'r')
     name = os.path.basename(f.name).replace(".csv","")
     data = pd.read_csv(f)
@@ -14,5 +14,5 @@ for files in glob.glob('C:\\Users\\Chowdary\\Desktop\\Dadv\\*.csv'):
         lis.append(gl)
     lis.insert(0,0)
     data.loc[:,'gainORloss'] = lis
-    data.to_csv(r'C:\\Users\\Chowdary\\Desktop\\Dadv\\'+name+'.csv')
+    data.to_csv(r'G:\\DataScience_2019501068\\DADV\\'+name+'.csv')
     f.close()
